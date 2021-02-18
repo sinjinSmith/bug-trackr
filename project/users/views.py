@@ -1,6 +1,5 @@
 from flask import flash, redirect, render_template, request, url_for, Blueprint
 from project import db
-from project.users.utils import *
 from project.users.forms import *
 
 users_blueprint = Blueprint(

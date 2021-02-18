@@ -1,5 +1,6 @@
 from project import db
 
+# test model for basic users
 class testmodel(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
