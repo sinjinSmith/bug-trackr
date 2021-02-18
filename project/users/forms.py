@@ -1,10 +1,26 @@
 from project import db
 from project.models import testmodel
+from flask import session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 dbName = testmodel
 search_user = db.session.query(dbName)
 session_var = {"user", "email"}
 
+# def clear_all_data():
+#     db.session.query(dbName).delete()
+#     db.session.commit()
+
+def add_user(name, password, email):
+    return dbName(
+        name, 
+        generate_password_hash(password, method='pbkdf2:sha256', salt_length=8),
+        email
+    )
+
+def clear_session(session_var):
+    for data in session_var:
+        session.pop(data, None)
 
 def find_user(user):
     found_user = search_user.filter_by(name=user).all()
@@ -16,6 +32,6 @@ def valid_email(user):
 
 def valid_user(users, password):
     for user in users:
-        if user.password == password:
+        if check_password_hash(user.password, password):
             return True
     return False
